@@ -1,16 +1,25 @@
 fileFormatVersion: 2
-guid: 0cdafc3b8e7f3484797730588e8f166b
+guid: cad80ab14fd5aaa4dbebac5113c4ca5e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -416367760087143601
-    second: TiroExplode_0
+      213: -4467334373317000905
+    second: Ally_Bullet_0
   - first:
-      213: -5387807233523184634
-    second: TiroExplode_1
+      213: 8002455006425350581
+    second: Ally_Bullet_1
   - first:
-      213: 5612749882766665937
-    second: TiroExplode_2
+      213: 2960081878036011423
+    second: Ally_Bullet_2
+  - first:
+      213: -8172641919998881378
+    second: Ally_Bullet_3
+  - first:
+      213: 4019369502599839737
+    second: Ally_Bullet_4
+  - first:
+      213: 5489121219433041383
+    second: Ally_Bullet_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -97,6 +106,18 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
     buildTarget: Windows Store Apps
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -112,7 +133,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TiroExplode_0
+      name: Ally_Bullet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -126,14 +147,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f4ba41c6ab3c83af0800000000000000
-      internalID: -416367760087143601
+      spriteID: 7314c817e07d002c0800000000000000
+      internalID: -4467334373317000905
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TiroExplode_1
+      name: Ally_Bullet_1
       rect:
         serializedVersion: 2
         x: 16
@@ -147,14 +168,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 60c029fedd9aa35b0800000000000000
-      internalID: -5387807233523184634
+      spriteID: 5b18705fd6e6e0f60800000000000000
+      internalID: 8002455006425350581
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TiroExplode_2
+      name: Ally_Bullet_2
       rect:
         serializedVersion: 2
         x: 32
@@ -168,8 +189,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1d82c6fd74e74ed40800000000000000
-      internalID: 5612749882766665937
+      spriteID: f99586ee8c2541920800000000000000
+      internalID: 2960081878036011423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ally_Bullet_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e91100a6971f49e80800000000000000
+      internalID: -8172641919998881378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ally_Bullet_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ff708f544ba7c730800000000000000
+      internalID: 4019369502599839737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ally_Bullet_5
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ed8d5d9aa64d2c40800000000000000
+      internalID: 5489121219433041383
       vertices: []
       indices: 
       edges: []
