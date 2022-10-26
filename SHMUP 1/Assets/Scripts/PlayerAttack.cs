@@ -7,7 +7,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private GameObject[] tiros;
     private Animator anim;
     private Movement playerMovement;
-    private float cooldownTimer = Mathf.Infinity;
+    private float cooldownTimer = 6.0f;
 
     private void Awake()
     {
