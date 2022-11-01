@@ -12,6 +12,7 @@ public class Inimigo : MonoBehaviour
         if(collision.tag == "Player")
         {
             collision.GetComponent<Health>().TomaDano(dano);
+            Destroy(gameObject);
         }
     }
 }

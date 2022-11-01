@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class uiManager : MonoBehaviour
 {
     public static bool JogoPausado = false;
-    public GameObject buttonUI, pauseMenuUI, player, seletor, projetil;
+    public GameObject buttonUI, pauseMenuUI, barraDeVida, player, seletor, projetil;
 
     public GameObject seletorPrimeiro, pausePrimeiro;
 
@@ -64,19 +64,28 @@ public class uiManager : MonoBehaviour
         SceneManager.LoadScene("Menu");
     }
 
+    public void Restart()
+    {
+        Time.timeScale = 1f;
+        JogoPausado = false;
+        SceneManager.LoadScene("Game");
+    }
+
     public void Ataque()
     {
         Time.timeScale = 1f;
         projetil.SetActive(true);
         seletor.SetActive(false);
         buttonUI.SetActive(true);
-        
+        barraDeVida.SetActive(true);
+
     }
 
     public void Fecha()
     {
         seletor.SetActive(false);
         buttonUI.SetActive(true);
+        barraDeVida.SetActive(true);
         Time.timeScale = 1f;
         GetComponent<PlayerAttack>().enabled = false;
     }

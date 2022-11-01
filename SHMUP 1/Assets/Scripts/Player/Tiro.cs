@@ -7,7 +7,7 @@ public class Tiro : MonoBehaviour
     private bool hit;
 
     private CircleCollider2D circleCollider;
-    private Animator anim;
+    public Animator anim;
 
     private void Awake()
     {
@@ -24,7 +24,6 @@ public class Tiro : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        hit = true;
         circleCollider.enabled = false;
         anim.SetTrigger("Explod");
     }
@@ -43,7 +42,7 @@ public class Tiro : MonoBehaviour
         transform.localScale = new Vector3(transform.localScale.y, localScaleY, transform.localScale.z);
     }
 
-    private void Deactivate()
+    public void Deactivate()
     {
         gameObject.SetActive(false);
     }

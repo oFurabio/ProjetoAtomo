@@ -30,6 +30,7 @@ public class Health : MonoBehaviour
             {
                 anim.SetTrigger("die");
                 fogo.SetActive(false);
+                GetComponent<PlayerAttack>().enabled = false;
                 GetComponent<Movement>().enabled = false;
                 dead = true;
             }

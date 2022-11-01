@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Camada Jogador")]
     [SerializeField] private LayerMask playerLayer;
-    private float cooldownTimer = Mathf.Infinity;
+    //private float cooldownTimer = Mathf.Infinity;
 
     private Animator anim;
 
@@ -32,13 +32,11 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
-            Attack();
     }
 
     private void RangedAttack()
     {
-        cooldownTimer = 0;
+        //cooldownTimer = 0;
         //fireballs[0].transform.parent = firepoint.position;
         //fireballs[0].GetComponent<EnemyProjectile>().ActivateProjectile();
     }

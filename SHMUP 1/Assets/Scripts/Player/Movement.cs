@@ -7,6 +7,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private float speed;           //  Velocidade da nave
     private Rigidbody2D body;                       //  Instancia o RigidBody2D
     private Animator anim;                          //  Instancia o Animator
+    Vector2 move;
     private float horizontalInput;
     private float verticalInput;
 
@@ -16,14 +17,17 @@ public class Movement : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
+    void FixedUpdate()
+    {
+        body.MovePosition(body.position + (move * speed * Time.deltaTime));
+    }
+
     private void Update()
     {
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
 
-        body.velocity = new Vector2(Input.GetAxis("Vertical") * speed, body.velocity.y);
-        body.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, body.velocity.x);
-
+        move = new Vector2(horizontalInput, verticalInput);
 
         if (!uiManager.JogoPausado)
         {
