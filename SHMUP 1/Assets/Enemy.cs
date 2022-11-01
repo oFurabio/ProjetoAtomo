@@ -39,8 +39,8 @@ public class Enemy : MonoBehaviour
     private void RangedAttack()
     {
         cooldownTimer = 0;
-        fireballs[0].transform.parent = firepoint.position;
-        fireballs[0].GetComponent<EnemyProjectile>().ActivateProjectile();
+        //fireballs[0].transform.parent = firepoint.position;
+        //fireballs[0].GetComponent<EnemyProjectile>().ActivateProjectile();
     }
 
     private void Attack()
