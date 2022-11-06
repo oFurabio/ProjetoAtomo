@@ -6,9 +6,12 @@ using UnityEngine.EventSystems;
 
 public class uiManager : MonoBehaviour
 {
-    public static bool JogoPausado = false;
-    public GameObject buttonUI, pauseMenuUI, barraDeVida, player, seletor, projetil;
+    public static bool JogoPausado = true;
 
+    public static bool ataqAtivo = false;
+    public static bool dashAtivo = false;
+
+    public GameObject buttonUI, pauseMenuUI, barraDeVida, player, seletor, projetil;
     public GameObject seletorPrimeiro, pausePrimeiro;
 
     private void Awake()
@@ -73,20 +76,25 @@ public class uiManager : MonoBehaviour
 
     public void Ataque()
     {
+        ataqAtivo = true;
+        dashAtivo = false;
+        seletor.SetActive(false);
         Time.timeScale = 1f;
         projetil.SetActive(true);
-        seletor.SetActive(false);
         buttonUI.SetActive(true);
         barraDeVida.SetActive(true);
+        JogoPausado = false;
 
     }
 
-    public void Fecha()
+    public void Dash()
     {
+        dashAtivo = true;
+        ataqAtivo = false;
         seletor.SetActive(false);
         buttonUI.SetActive(true);
         barraDeVida.SetActive(true);
         Time.timeScale = 1f;
-        GetComponent<PlayerAttack>().enabled = false;
+        JogoPausado = false;
     }
 }

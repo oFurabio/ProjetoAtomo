@@ -7,7 +7,7 @@ public class Health : MonoBehaviour
     [SerializeField] private float vidaInicial;
     public float vidaAtual { get; private set; }
     private Animator anim;
-    public GameObject fogo;
+    public GameObject nave;
     public bool dead;
 
     private void Awake()
@@ -29,9 +29,8 @@ public class Health : MonoBehaviour
             if (!dead)
             {
                 anim.SetTrigger("die");
-                fogo.SetActive(false);
-                GetComponent<PlayerAttack>().enabled = false;
-                GetComponent<Movement>().enabled = false;
+                nave.SetActive(false);
+                GetComponent<Nave>().enabled = false;
                 dead = true;
             }
         }

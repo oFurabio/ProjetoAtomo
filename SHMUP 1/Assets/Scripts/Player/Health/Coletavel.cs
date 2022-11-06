@@ -10,7 +10,7 @@ public class Coletavel : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            collision.GetComponent<Health>().AddVida(valorVida);
+            collision.GetComponent<Nave>().AddVida(valorVida);
             gameObject.SetActive(false);
         }
     }

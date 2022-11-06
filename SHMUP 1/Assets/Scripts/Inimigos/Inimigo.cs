@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class Inimigo : MonoBehaviour
 {
-
     [SerializeField] private float dano;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == "Player")
         {
-            collision.GetComponent<Health>().TomaDano(dano);
+            collision.GetComponent<Nave>().TomaDano(dano);
             Destroy(gameObject);
         }
+
+        /*if (collision.tag == "Bullet")
+        {
+            Destroy(gameObject);
+        }*/
     }
 }
