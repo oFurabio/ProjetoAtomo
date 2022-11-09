@@ -435,7 +435,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1256604351}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 5994e42d91840e64a901642bdadb9755, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 508f1a0585555fe47985a4d19fcd9117, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -509,8 +509,6 @@ PlayableDirector:
   m_DirectorUpdateMode: 2
   m_InitialTime: 0
   m_SceneBindings:
-  - key: {fileID: 685527008324915479, guid: 9339aeb225589b24ab1c5ce8e5184ddc, type: 2}
-    value: {fileID: 2106466266}
   - key: {fileID: -6184808382712803375, guid: 9339aeb225589b24ab1c5ce8e5184ddc, type: 2}
     value: {fileID: 332053632}
   - key: {fileID: 3353107762996859263, guid: 9339aeb225589b24ab1c5ce8e5184ddc, type: 2}

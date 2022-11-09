@@ -134,6 +134,7 @@ public class Nave : MonoBehaviour
         isDashing = false;
         colisor.enabled = true;
         yield return new WaitForSeconds(dashCooldown);
+        anim.SetTrigger("Dash");
     }
 
     public void PodeDasha()
