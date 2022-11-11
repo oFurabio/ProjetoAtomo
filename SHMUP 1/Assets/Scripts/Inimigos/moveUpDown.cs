@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class moveUpDown : MonoBehaviour
 {
+    private Arma arma;
+    private void Awake()
+    {
+        arma = GetComponent<Arma>();
+    }
+
     public float speed = 5;
 
     private void FixedUpdate()
@@ -18,5 +24,8 @@ public class moveUpDown : MonoBehaviour
         }
 
         transform.position = pos;
+
+        //if (pos.y < 7)
+            //arma.autoShoot = true;
     }
 }

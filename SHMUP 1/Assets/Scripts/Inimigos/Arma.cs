@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class Arma : MonoBehaviour
 {
+    private Animator anim;
     public Bullet bullet;
     Vector2 direction;
 
-    public bool autoShoot = false;
+    public bool autoShoot;
     public float shootIntervalSeconds = 0.5f;
     public float shootDelaySeconds = 0.0f;
     float shootTimer = 0f;
     float delayTimer = 0f;
 
-    void Start()
+    private void Start()
     {
-        
+        anim = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         direction = (transform.localRotation * Vector2.down).normalized;
@@ -26,9 +26,35 @@ public class Arma : MonoBehaviour
         /*if (pos.y < 9)
             autoShoot = true;*/
             
-        if (autoShoot)
+        if (Input.GetKeyDown(KeyCode.X))
         {
             if(delayTimer >= shootDelaySeconds)
+            {
+                if(shootTimer >= shootIntervalSeconds)
+                {
+                    anim.SetTrigger("Atira");
+                    shootTimer = 0;
+                }
+                else
+                {
+                    shootTimer += Time.deltaTime;
+                }
+                
+            }
+            else
+            {
+                delayTimer += Time.deltaTime;
+            }
+        }
+    }
+
+    /*private void FixedUpdate()
+    {
+        direction = (transform.localRotation * Vector2.down).normalized;
+
+        if (autoShoot)
+        {
+            if (delayTimer >= shootDelaySeconds)
             {
                 Shoot();
                 shootTimer = 0;
@@ -42,7 +68,7 @@ public class Arma : MonoBehaviour
         {
             delayTimer += Time.deltaTime;
         }
-    }
+    }*/
 
     public void Shoot()
     {

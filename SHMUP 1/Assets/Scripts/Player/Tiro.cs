@@ -19,7 +19,7 @@ public class Tiro : MonoBehaviour
 
     private void Update()
     {
-        if (body.position.y > 11)
+        if (body.position.y > 8.5)
         {
             gameObject.SetActive(false);
         }

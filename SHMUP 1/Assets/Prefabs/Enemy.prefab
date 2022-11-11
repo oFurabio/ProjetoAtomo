@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1697b7da67bca244b2e030d174dab09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 4
 --- !u!114 &9202819710435640661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,6 +231,7 @@ GameObject:
   - component: {fileID: 9202819711537543460}
   - component: {fileID: 9202819711537543463}
   - component: {fileID: 7815392470983245800}
+  - component: {fileID: 849751907562376500}
   m_Layer: 6
   m_Name: Atira
   m_TagString: Untagged
@@ -245,13 +246,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9202819711537543461}
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9202819710435640670}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &9202819711537543463
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -317,5 +318,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 7273947386907261792, guid: 99a2cef5741567742ac40fa99416cf7e, type: 3}
   autoShoot: 0
-  shootIntervalSeconds: 0.5
+  shootIntervalSeconds: 0.25
   shootDelaySeconds: 0
+--- !u!95 &849751907562376500
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9202819711537543461}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 04f3e15f894276648aa2afb254c2bb24, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

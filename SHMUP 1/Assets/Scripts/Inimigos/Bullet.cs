@@ -8,18 +8,22 @@ public class Bullet : MonoBehaviour
     public Vector2 direction = new Vector2(0, -1);
     public float speed = 2;
     public float dano;
+    Vector2 pos;
 
     public Vector2 velocity;
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(gameObject, 3);
+        pos = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
         velocity = direction * speed;
+
+        if (pos.y < -9)
+            Destroy(gameObject);
     }
 
     private void FixedUpdate()
