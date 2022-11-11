@@ -10,10 +10,13 @@ public class Bullet : MonoBehaviour
     public float dano;
     Vector2 pos;
 
+    private Rigidbody2D body;
+
     public Vector2 velocity;
     // Start is called before the first frame update
     void Start()
     {
+        body = GetComponent<Rigidbody2D>();
         pos = transform.position;
     }
 
@@ -22,7 +25,7 @@ public class Bullet : MonoBehaviour
     {
         velocity = direction * speed;
 
-        if (pos.y < -9)
+        if (body.position.y < -9)
             Destroy(gameObject);
     }
 

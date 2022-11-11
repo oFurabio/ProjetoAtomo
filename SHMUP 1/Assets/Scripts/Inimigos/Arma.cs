@@ -26,13 +26,13 @@ public class Arma : MonoBehaviour
         /*if (pos.y < 9)
             autoShoot = true;*/
             
-        if (Input.GetKeyDown(KeyCode.X))
+        if (autoShoot)
         {
             if(delayTimer >= shootDelaySeconds)
             {
                 if(shootTimer >= shootIntervalSeconds)
                 {
-                    anim.SetTrigger("Atira");
+                    Shoot();
                     shootTimer = 0;
                 }
                 else
@@ -72,6 +72,7 @@ public class Arma : MonoBehaviour
 
     public void Shoot()
     {
+        anim.SetTrigger("atira");
         GameObject go = Instantiate(bullet.gameObject, transform.position, Quaternion.identity);
         Bullet goBullet = go.GetComponent<Bullet>();
         goBullet.direction = direction;
