@@ -14,9 +14,6 @@ public class Inimigo : MonoBehaviour
             Destroy(gameObject);
         }
 
-        /*if (collision.tag == "Bullet")
-        {
-            Destroy(gameObject);
-        }*/
+
     }
 }

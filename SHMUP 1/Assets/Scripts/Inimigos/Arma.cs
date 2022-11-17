@@ -8,6 +8,8 @@ public class Arma : MonoBehaviour
     public Bullet bullet;
     Vector2 direction;
 
+    private Rigidbody2D body;
+
     public bool autoShoot;
     public float shootIntervalSeconds = 0.5f;
     public float shootDelaySeconds = 0.0f;
@@ -17,6 +19,7 @@ public class Arma : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<Animator>();
+        body = GetComponentInParent<Rigidbody2D>();
     }
 
     void Update()
@@ -26,7 +29,7 @@ public class Arma : MonoBehaviour
         /*if (pos.y < 9)
             autoShoot = true;*/
             
-        if (autoShoot)
+        while (body.position.y < 9.01f)
         {
             if(delayTimer >= shootDelaySeconds)
             {
@@ -47,29 +50,6 @@ public class Arma : MonoBehaviour
             }
         }
     }
-
-    /*private void FixedUpdate()
-    {
-        direction = (transform.localRotation * Vector2.down).normalized;
-
-        if (autoShoot)
-        {
-            if (delayTimer >= shootDelaySeconds)
-            {
-                Shoot();
-                shootTimer = 0;
-            }
-            else
-            {
-                shootTimer += Time.deltaTime;
-            }
-        }
-        else
-        {
-            delayTimer += Time.deltaTime;
-        }
-    }*/
-
     public void Shoot()
     {
         anim.SetTrigger("atira");
