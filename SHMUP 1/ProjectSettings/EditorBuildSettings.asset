@@ -9,18 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 0e976ae29d853744788fb788d99df334
   - enabled: 1
-    path: Assets/Scenes/Cutscene.unity
+    path: Assets/Scenes/Cena.unity
     guid: d94a8796018c9134aa543a97ae0f5547
   - enabled: 1
     path: Assets/Scenes/Game.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
-    path: Assets/Scenes/ComoJogar.unity
-    guid: a8662dddaa855884aa36c81773c6b1a7
-  - enabled: 1
-    path: Assets/Scenes/Config.unity
-    guid: 64ad356a1ed424b40813f6e488b53a6a
-  - enabled: 1
-    path: Assets/Scenes/Creditos.unity
-    guid: 5598b717f282c1045ae7688891564808
   m_configObjects: {}

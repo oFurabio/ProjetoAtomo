@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public class Tiro : MonoBehaviour
-{
+public class Tiro : MonoBehaviour {
     [SerializeField] private float speed;
     private float direction;
     private bool hit;
@@ -10,37 +9,30 @@ public class Tiro : MonoBehaviour
     private CircleCollider2D circleCollider;
     public Animator anim;
 
-    private void Awake()
-    {
+    private void Awake() {
         body = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         circleCollider = GetComponent<CircleCollider2D>();
     }
 
-    private void Update()
-    {
-        if (body.position.y > 8.5)
-        {
+    private void Update() {
+        if (body.position.y > 10)
             gameObject.SetActive(false);
-        }
 
         if (hit) return;
         float moveSpeed = speed * Time.deltaTime * direction;
         transform.Translate(0, moveSpeed, 0);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Enemy")
-        {
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.CompareTag("Enemy")) {
             hit = true;
             circleCollider.enabled = false;
             anim.SetTrigger("Explod");
         }
     }
 
-    public void SetDirection(float _direction)
-    {
+    public void SetDirection(float _direction) {
         direction = _direction;
         gameObject.SetActive(true);
         hit = false;
@@ -53,8 +45,7 @@ public class Tiro : MonoBehaviour
         transform.localScale = new Vector3(transform.localScale.y, localScaleY, transform.localScale.z);
     }
 
-    public void Deactivate()
-    {
+    public void Deactivate() {
         gameObject.SetActive(false);
     }
 }

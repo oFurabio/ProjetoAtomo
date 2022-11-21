@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Nave : MonoBehaviour
-{
-
+public class Nave : MonoBehaviour {
     [Header("Basic Movement")]
     [SerializeField] private float speed;           //  Velocidade da nave
+    [SerializeField] private AudioSource shootSound;
+    [SerializeField] private AudioSource dashSound;
     private Rigidbody2D body;                       //  Instancia o RigidBody2D
     private Animator anim;                          //  Instancia o Animator
     private PolygonCollider2D colisor;              //  Instancia o Collider
@@ -22,7 +22,7 @@ public class Nave : MonoBehaviour
 
     [SerializeField] private float vidaInicial;
     public float VidaAtual { get; private set; }
-    public bool dead;
+    public static bool dead;
 
     [Header("Fire")]
 
@@ -40,25 +40,23 @@ public class Nave : MonoBehaviour
     private bool canDash = true;
     private bool isDashing;
 
-    private void Awake()
-    {
+    private void Awake() {
         colisor = GetComponent<PolygonCollider2D>();
         body = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
 
+        dead = false;
         VidaAtual = vidaInicial;
         isDashing = false;
     }
 
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         body.MovePosition(body.position + (move * speed * Time.deltaTime));
 
-        if (uiManager.dashAtivo) {
+        if (GameManager.dashAtivo) {
             if (Input.GetButton("Fire1") && canDash)
                 StartCoroutine(Dash());
-        }
-        else if (uiManager.ataqAtivo) {
+        } else if (GameManager.ataqAtivo) {
             if (Input.GetButton("Fire1") && cooldownTimer > attackCooldown && canAttack())
                 Attack();
         }
@@ -66,15 +64,13 @@ public class Nave : MonoBehaviour
         cooldownTimer += Time.deltaTime;
     }
 
-    private void Update()
-    {
+    private void Update() {
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
 
         move = new Vector2(horizontalInput, verticalInput);
 
-        if (!uiManager.JogoPausado)
-        {
+        if (!GameManager.JogoPausado) {
             anim.SetBool("Up", verticalInput > 0.01f);
             anim.SetBool("Right", horizontalInput > 0.01f);
             anim.SetBool("Left", horizontalInput < -0.01f);
@@ -91,42 +87,36 @@ public class Nave : MonoBehaviour
         }
     }
 
-    public bool canAttack()
-    {
-        return !uiManager.JogoPausado;
+    public bool canAttack() {
+        return !GameManager.JogoPausado;
     }
 
-    private void Attack()
-    {
+    private void Attack() {
         anim.SetTrigger("Ataq");
+        shootSound.Play();
         cooldownTimer = 0;
 
         tiros[FindTiro()].transform.position = firePoint.position;
         tiros[FindTiro()].GetComponent<Tiro>().SetDirection(Mathf.Sign(transform.localScale.y));
     }
 
-    private int FindTiro()
-    {
-        for (int i = 0; i < tiros.Length; i++)
-        {
+    private int FindTiro() {
+        for (int i = 0; i < tiros.Length; i++) {
             if (!tiros[i].activeInHierarchy)
                 return i;
         }
         return 0;
     }
 
-    private IEnumerator Dash()
-    {
+    private IEnumerator Dash() {
+        anim.SetTrigger("Dash");
+        dashSound.Play();
         canDash = false;
         isDashing = true;
-        if(horizontalInput != 0 && verticalInput != 0) {
+        if(horizontalInput != 0 && verticalInput != 0)
             body.MovePosition(body.position + (move * ((speed * dashingPower)/2) * Time.deltaTime));
-            //body.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
-        }
-        else {
+        else
             body.MovePosition(body.position + (move * (speed * dashingPower) * Time.deltaTime));
-            //body.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
-        }
         tr.emitting = true;
         colisor.enabled = false;
         yield return new WaitForSeconds(dashingTime);
@@ -134,26 +124,19 @@ public class Nave : MonoBehaviour
         isDashing = false;
         colisor.enabled = true;
         yield return new WaitForSeconds(dashCooldown);
-        anim.SetTrigger("Dash");
     }
 
-    public void PodeDasha()
-    {
+    public void PodeDasha() {
         canDash = true;
     }
 
-    public void TomaDano(float dano)
-    {
+    public void TomaDano(float dano) {
         VidaAtual = Mathf.Clamp(VidaAtual - dano, 0, vidaInicial);
 
-        if (VidaAtual > 0)
-        {
+        if (VidaAtual > 0) {
             anim.SetTrigger("hurt");
-        }
-        else
-        {
-            if (!dead)
-            {
+        } else {
+            if (!dead) {
                 anim.SetTrigger("die");
                 gameObject.SetActive(false);
                 dead = true;
@@ -161,8 +144,7 @@ public class Nave : MonoBehaviour
         }
     }
 
-    public void AddVida(float _valor)
-    {
+    public void AddVida(float _valor) {
         VidaAtual = Mathf.Clamp(VidaAtual + _valor, 0, vidaInicial);
     }
 }

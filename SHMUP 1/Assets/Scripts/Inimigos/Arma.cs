@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Arma : MonoBehaviour
-{
+public class Arma : MonoBehaviour {
     private Animator anim;
     public Bullet bullet;
     Vector2 direction;
@@ -16,43 +15,29 @@ public class Arma : MonoBehaviour
     float shootTimer = 0f;
     float delayTimer = 0f;
 
-    private void Start()
-    {
+    private void Start() {
         anim = GetComponent<Animator>();
         body = GetComponentInParent<Rigidbody2D>();
     }
 
-    void Update()
-    {
+    void Update() {
         direction = (transform.localRotation * Vector2.down).normalized;
-
-        /*if (pos.y < 9)
-            autoShoot = true;*/
             
-        while (body.position.y < 9.01f)
-        {
-            if(delayTimer >= shootDelaySeconds)
-            {
-                if(shootTimer >= shootIntervalSeconds)
-                {
-                    Shoot();
+        if(body.position.y < 9.01f && autoShoot) {
+            if(delayTimer >= shootDelaySeconds) {
+                if(shootTimer >= shootIntervalSeconds) {
+                    anim.SetTrigger("atira");
                     shootTimer = 0;
-                }
-                else
-                {
+                } else {
                     shootTimer += Time.deltaTime;
                 }
-                
-            }
-            else
-            {
+            } else {
                 delayTimer += Time.deltaTime;
             }
         }
     }
-    public void Shoot()
-    {
-        anim.SetTrigger("atira");
+
+    public void Shoot() {
         GameObject go = Instantiate(bullet.gameObject, transform.position, Quaternion.identity);
         Bullet goBullet = go.GetComponent<Bullet>();
         goBullet.direction = direction;
