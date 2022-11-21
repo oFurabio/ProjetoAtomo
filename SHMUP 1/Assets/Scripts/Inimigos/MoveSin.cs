@@ -20,12 +20,6 @@ public class MoveSin : MonoBehaviour
         ranFreq = Random.Range(0.1f, 1.5f);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     private void FixedUpdate()
     {
         Vector2 pos = transform.position;

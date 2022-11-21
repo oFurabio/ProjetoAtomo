@@ -12,16 +12,6 @@ public class AudioManager : MonoBehaviour {
     private string musica;
 
     void Awake() {
-
-        /*if (instance == null)
-            instance = this;
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }*/
-
-
         foreach (Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
@@ -51,8 +41,7 @@ public class AudioManager : MonoBehaviour {
         s.source.volume = s.volume * (1f + UnityEngine.Random.Range(-s.volumeVariance / 2f, s.volumeVariance / 2f));
         s.source.pitch = s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
 
-        if (GameManager.JogoPausado)
-        {
+        if (GameManager.JogoPausado) {
             s.source.pitch *= .5f;
         }
 

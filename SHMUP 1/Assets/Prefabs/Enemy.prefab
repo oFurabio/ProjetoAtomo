@@ -157,7 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amp: 8
-  freq: 1
+  freq: 0.5
   invertido: 0
   speed: 5
 --- !u!1 &9202819711537543461

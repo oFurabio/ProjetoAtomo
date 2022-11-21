@@ -574,7 +574,7 @@ MonoBehaviour:
   comoVoltar: {fileID: 1869633391}
   credVoltar: {fileID: 666269628}
   menJogar: {fileID: 1241657909}
-  levelName: Game
+  levelName: Cena
 --- !u!1 &154821120
 GameObject:
   m_ObjectHideFlags: 0
@@ -735,7 +735,7 @@ MonoBehaviour:
 
 
 
-    Leticia'
+    Leticia Masumoto'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 11cbddccc0368b7439a598031f4ed87a, type: 2}
   m_sharedMaterial: {fileID: -752824882322325824, guid: 11cbddccc0368b7439a598031f4ed87a, type: 2}

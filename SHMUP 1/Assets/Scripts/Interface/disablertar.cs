@@ -4,23 +4,22 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class disablertar : MonoBehaviour
-{
-    public GameObject texto;
-    // Start is called before the first frame update
-    void Start()
-    {
-        texto.SetActive(false);
-    }
+public class disablertar : MonoBehaviour {
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public GameObject botao;
 
-    public void TrocaCena()
-    {
+    /*private void Update() {
+        if (Input.GetAxis)
+        {
+
+        }
+    }*/
+
+    public void TrocaCena() {
         SceneManager.LoadScene("Game");
+    }
+
+    public void HabilitaBotao() {
+        botao.SetActive(true);
     }
 }

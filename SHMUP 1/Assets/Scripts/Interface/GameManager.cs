@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour {
     public static bool dashAtivo = false;
 
     public GameObject buttonUI, pauseMenuUI, barraDeVida, player, seletor, projetil, configuracao, limites, gameOver;
-    public GameObject seletorPrimeiro, pausePrimeiro;
+    public GameObject seletorPrimeiro, pausePrimeiro, configPrimeiro;
 
     private void Awake() {
         EventSystem.current.SetSelectedGameObject(seletorPrimeiro);
@@ -48,6 +48,8 @@ public class GameManager : MonoBehaviour {
         Time.timeScale = 0f;
         JogoPausado = true;
 
+
+
         //clear selected object
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(pausePrimeiro);
@@ -55,6 +57,9 @@ public class GameManager : MonoBehaviour {
 
     public void Configuracao() {
         configuracao.SetActive(true);
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(configPrimeiro);
     }
 
     public void LoadMenu() {
@@ -94,6 +99,9 @@ public class GameManager : MonoBehaviour {
 
     public void Voltar() {
         configuracao.SetActive(false);
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(pausePrimeiro);
     }
 
     public void GameOver() {
