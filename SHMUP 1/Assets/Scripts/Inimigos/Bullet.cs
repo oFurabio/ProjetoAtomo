@@ -5,8 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour {
     public Vector2 direction = new Vector2(0, -1);
     public float speed = 2;
-    public float dano;
-
+    public int dano;
 
     public Vector2 velocity;
     

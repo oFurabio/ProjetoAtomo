@@ -1,28 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//using UnityEngine.InputSystem;
 
 public class Nave : MonoBehaviour {
     [Header("Basic Movement")]
     [SerializeField] private float speed;           //  Velocidade da nave
     [SerializeField] private AudioSource shootSound;
     [SerializeField] private AudioSource dashSound;
+    [SerializeField] private AudioSource coletou;
+    //[SerializeField] private AudioSource explodeSound;
+    public GameObject morte;
+    [SerializeField] private GameManager gm;
     private Rigidbody2D body;                       //  Instancia o RigidBody2D
+    private SpriteRenderer sprite;
     private Animator anim;                          //  Instancia o Animator
-    private PolygonCollider2D colisor;              //  Instancia o Collider
+
     Vector2 move;
 
     private float horizontalInput;
     private float verticalInput;
 
-    public float limitX;
-    public float limitY;
+    [SerializeField] private float limitX;
+    [SerializeField] private float limitY;
 
     [Header("Health")]
 
-    [SerializeField] private float vidaInicial;
-    public float VidaAtual { get; private set; }
+    [SerializeField] private int vidaInicial;
+    [SerializeField] private float invulne;
+    public int VidaAtual;
     public static bool dead;
+    Color c;
 
     [Header("Fire")]
 
@@ -40,24 +48,38 @@ public class Nave : MonoBehaviour {
     private bool canDash = true;
     private bool isDashing;
 
+    [SerializeField] private GameObject fogo;
+    [SerializeField] private GameObject cooldown;
+
     private void Awake() {
-        colisor = GetComponent<PolygonCollider2D>();
         body = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        sprite = GetComponent<SpriteRenderer>();
+
+        Physics2D.IgnoreLayerCollision(6, 7, false);
+
+        c = sprite.material.color;
 
         dead = false;
         VidaAtual = vidaInicial;
         isDashing = false;
+
+        fogo.SetActive(true);
+        cooldown.SetActive(true);
     }
 
     void FixedUpdate() {
         body.MovePosition(body.position + (move * speed * Time.deltaTime));
 
         if (GameManager.dashAtivo) {
-            if (Input.GetButton("Fire1") && canDash)
-                StartCoroutine(Dash());
+            if (Input.GetButton("Fire1") && canDash && !dead) {
+                if (horizontalInput != 0 || verticalInput != 0) {
+                    anim.SetTrigger("Dash");
+                    StartCoroutine("Dash");
+                }
+            }
         } else if (GameManager.ataqAtivo) {
-            if (Input.GetButton("Fire1") && cooldownTimer > attackCooldown && canAttack())
+            if (Input.GetButton("Fire1") && cooldownTimer > attackCooldown && CanAttack())
                 Attack();
         }
 
@@ -65,8 +87,8 @@ public class Nave : MonoBehaviour {
     }
 
     private void Update() {
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
 
         move = new Vector2(horizontalInput, verticalInput);
 
@@ -87,13 +109,13 @@ public class Nave : MonoBehaviour {
         }
     }
 
-    public bool canAttack() {
-        return !GameManager.JogoPausado;
+    public bool CanAttack() {
+        return !GameManager.JogoPausado && !dead;
     }
 
     private void Attack() {
+        shootSound.PlayOneShot(shootSound.clip, 0.75f);
         anim.SetTrigger("Ataq");
-        shootSound.Play();
         cooldownTimer = 0;
 
         tiros[FindTiro()].transform.position = firePoint.position;
@@ -109,42 +131,70 @@ public class Nave : MonoBehaviour {
     }
 
     private IEnumerator Dash() {
-        anim.SetTrigger("Dash");
         dashSound.Play();
         canDash = false;
         isDashing = true;
         if(horizontalInput != 0 && verticalInput != 0)
-            body.MovePosition(body.position + (move * ((speed * dashingPower)/2) * Time.deltaTime));
-        else
-            body.MovePosition(body.position + (move * (speed * dashingPower) * Time.deltaTime));
+            body.MovePosition(body.position + (((speed * dashingPower)/2) * Time.deltaTime * move));
+        else if (horizontalInput == 0 && verticalInput == 0) {
+            body.MovePosition(body.position + (((speed * dashingPower) / 2) * Time.deltaTime * move));
+        } else
+            body.MovePosition(body.position + ((speed * dashingPower) * Time.deltaTime * move));
         tr.emitting = true;
-        colisor.enabled = false;
+        Physics2D.IgnoreLayerCollision(6, 7, true);
         yield return new WaitForSeconds(dashingTime);
+        Physics2D.IgnoreLayerCollision(6, 7, false);
         tr.emitting = false;
         isDashing = false;
-        colisor.enabled = true;
-        yield return new WaitForSeconds(dashCooldown);
+        yield return new WaitForSecondsRealtime(dashCooldown);
     }
 
     public void PodeDasha() {
         canDash = true;
     }
 
-    public void TomaDano(float dano) {
-        VidaAtual = Mathf.Clamp(VidaAtual - dano, 0, vidaInicial);
+    public void TomaDano(int dano) {
+        VidaAtual = VidaAtual - dano;
 
         if (VidaAtual > 0) {
+            StartCoroutine("FicaInvulneravel");
             anim.SetTrigger("hurt");
         } else {
             if (!dead) {
+                GameManager.explodeSound.PlayOneShot(GameManager.explodeSound.clip, 0.75f);
+                Physics2D.IgnoreLayerCollision(6, 7, true);
                 anim.SetTrigger("die");
-                gameObject.SetActive(false);
-                dead = true;
             }
         }
     }
 
-    public void AddVida(float _valor) {
-        VidaAtual = Mathf.Clamp(VidaAtual + _valor, 0, vidaInicial);
+    public void AddVida(int _valor) {
+        coletou.PlayOneShot(coletou.clip, 0.75f);
+        if (VidaAtual <= 9)
+            VidaAtual = VidaAtual + _valor;
+    }
+
+    public void Morreu() {
+        morte.SetActive(true);
+        dead = true;
+        fogo.SetActive(false);
+        cooldown.SetActive(false);
+        speed = 0;
+    }
+
+    IEnumerator FicaInvulneravel() {
+        Physics2D.IgnoreLayerCollision(6, 7, true);
+        c.a = 0.5f;
+        sprite.material.color = c;
+        yield return new WaitForSeconds(invulne);
+        Physics2D.IgnoreLayerCollision(6, 7, false);
+        c.a = 1f;
+        sprite.material.color = c;
+    }
+
+    public void Desabilito() {
+        gm.GameOver();
+        Time.timeScale = 0.25f;
+        Destroy(gameObject);
     }
 }

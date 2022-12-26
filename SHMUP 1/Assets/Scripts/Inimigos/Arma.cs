@@ -9,30 +9,40 @@ public class Arma : MonoBehaviour {
 
     private Rigidbody2D body;
 
-    public bool autoShoot;
-    public float shootIntervalSeconds = 0.5f;
-    public float shootDelaySeconds = 0.0f;
-    float shootTimer = 0f;
-    float delayTimer = 0f;
+    [SerializeField] private bool autoShoot;
+
+    [SerializeField] private float startShoot;
+    [SerializeField] private float shootIntervalSeconds;
+    [SerializeField] private float shootDelaySeconds;
+
+    private float shootTimer = 0f;
+    private float delayTimer = 0f;
 
     private void Start() {
         anim = GetComponent<Animator>();
         body = GetComponentInParent<Rigidbody2D>();
     }
 
-    void Update() {
+    private void FixedUpdate() {
         direction = (transform.localRotation * Vector2.down).normalized;
-            
-        if(body.position.y < 9.01f && autoShoot) {
-            if(delayTimer >= shootDelaySeconds) {
-                if(shootTimer >= shootIntervalSeconds) {
+
+        if ((body.position.y < startShoot) && autoShoot)
+        {
+            if (delayTimer >= shootDelaySeconds)
+            {
+                if (shootTimer >= shootIntervalSeconds)
+                {
                     anim.SetTrigger("atira");
                     shootTimer = 0;
-                } else {
-                    shootTimer += Time.deltaTime;
                 }
-            } else {
-                delayTimer += Time.deltaTime;
+                else
+                {
+                    shootTimer += Time.fixedDeltaTime;
+                }
+            }
+            else
+            {
+                delayTimer += Time.fixedDeltaTime;
             }
         }
     }

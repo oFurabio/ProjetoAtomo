@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Inimigo : MonoBehaviour
 {
-    [SerializeField] private float dano;
+    [SerializeField] private int dano;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

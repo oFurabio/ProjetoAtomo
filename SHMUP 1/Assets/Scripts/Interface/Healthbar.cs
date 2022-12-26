@@ -1,19 +1,32 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 
-public class Healthbar : MonoBehaviour
-{
-    [SerializeField] private Nave pHealth;
-    [SerializeField] private Image totalHealthBar;
-    [SerializeField] private Image currentHealthBar;
+public class Healthbar : MonoBehaviour {
+    public SpriteRenderer sprites;
 
-    private void Start()
-    {
-        totalHealthBar.fillAmount = pHealth.VidaAtual / 10;
+    public Nave jogador;
+
+    public Sprite[] spriteArray;
+
+    public int vidaInt;
+
+    private void Start() {
+        vidaInt = jogador.VidaAtual;
     }
-    private void Update()
-    {
-        currentHealthBar.fillAmount = pHealth.VidaAtual /10;
+
+    private void Update() {
+        if (vidaInt != jogador.VidaAtual) {
+            MudarSprite();
+            vidaInt = jogador.VidaAtual;
+        }
+    }
+
+    void MudarSprite() {
+        if(vidaInt > jogador.VidaAtual)
+            sprites.sprite = spriteArray[vidaInt - 1];
+        else
+            sprites.sprite = spriteArray[vidaInt + 1];
     }
 }

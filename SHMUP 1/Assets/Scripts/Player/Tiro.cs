@@ -2,11 +2,14 @@ using UnityEngine;
 
 public class Tiro : MonoBehaviour {
     [SerializeField] private float speed;
+    [SerializeField] private float limit;
     private float direction;
     private bool hit;
 
     private Rigidbody2D body;
     private CircleCollider2D circleCollider;
+
+    [HideInInspector]
     public Animator anim;
 
     private void Awake() {
@@ -16,7 +19,7 @@ public class Tiro : MonoBehaviour {
     }
 
     private void Update() {
-        if (body.position.y > 10)
+        if (body.position.y > limit)
             gameObject.SetActive(false);
 
         if (hit) return;
