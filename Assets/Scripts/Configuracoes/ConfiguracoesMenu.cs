@@ -26,6 +26,7 @@ public class ConfiguracoesMenu : MonoBehaviour {
 
     public void SetVolume(float decimalVolume) {
         dbVolume = Mathf.Log10(decimalVolume) * 20;
+        
         if (decimalVolume == 0.0f)
             dbVolume = -80.0f;
 
@@ -36,20 +37,9 @@ public class ConfiguracoesMenu : MonoBehaviour {
         PlayerPrefs.SetFloat("volume", dbVolume);
     }
 
-    public void SetVolumeEfe(float decimalVolume) {
-        dbVolumeEfe = Mathf.Log10(decimalVolume) * 20;
-        if (decimalVolume == 0.0f)
-            dbVolumeEfe = -80.0f;
-
-        volumeEfeSlider = volumeEfe.value;
-        PlayerPrefs.SetFloat("sliderEfe", volumeEfeSlider);
-
-        audioMixer.SetFloat("volumeEfe", dbVolumeEfe);
-        PlayerPrefs.SetFloat("volume", dbVolumeEfe);
-    }
-
     public void SetVolumeMus(float decimalVolume) {
         dbVolumeMus = Mathf.Log10(decimalVolume) * 20;
+        
         if (decimalVolume == 0.0f)
             dbVolumeMus = -80.0f;
 
@@ -57,7 +47,20 @@ public class ConfiguracoesMenu : MonoBehaviour {
         PlayerPrefs.SetFloat("sliderMus", volumeMusSlider);
 
         audioMixer.SetFloat("volumeMus", dbVolumeMus);
-        PlayerPrefs.SetFloat("volume", dbVolumeMus);
+        PlayerPrefs.SetFloat("volumeMus", dbVolumeMus);
+    }
+
+    public void SetVolumeEfe(float decimalVolume) {
+        dbVolumeEfe = Mathf.Log10(decimalVolume) * 20;
+        
+        if (decimalVolume == 0.0f)
+            dbVolumeEfe = -80.0f;
+
+        volumeEfeSlider = volumeEfe.value;
+        PlayerPrefs.SetFloat("sliderEfe", volumeEfeSlider);
+
+        audioMixer.SetFloat("volumeEfe", dbVolumeEfe);
+        PlayerPrefs.SetFloat("volumeEfe", dbVolumeEfe);
     }
 
     public void SetFullscreen(bool isFullscreen) {
@@ -68,14 +71,10 @@ public class ConfiguracoesMenu : MonoBehaviour {
         contaFPS.SetActive(fps);
     }
 
-    /*public void SavePrefs() {
-        PlayerPrefs.SetFloat("")
-    }*/
-
     public void LoadPrefs() {
         dbVolume = PlayerPrefs.GetFloat("volume");
-        dbVolumeEfe = PlayerPrefs.GetFloat("volume");
-        dbVolumeMus = PlayerPrefs.GetFloat("volume");
+        dbVolumeEfe = PlayerPrefs.GetFloat("volumeEfe");
+        dbVolumeMus = PlayerPrefs.GetFloat("volumeMus");
 
         volume.value = PlayerPrefs.GetFloat("sliderGer");
         volumeEfe.value = PlayerPrefs.GetFloat("sliderEfe");

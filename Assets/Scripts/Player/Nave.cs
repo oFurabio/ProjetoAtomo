@@ -69,17 +69,17 @@ public class Nave : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        body.MovePosition(body.position + (move * speed * Time.deltaTime));
+        body.MovePosition(body.position + (speed * Time.deltaTime * move));
 
         if (GameManager.dashAtivo) {
             if (Input.GetButton("Fire1") && canDash && !dead) {
                 if (horizontalInput != 0 || verticalInput != 0) {
                     anim.SetTrigger("Dash");
-                    StartCoroutine("Dash");
+                    StartCoroutine(nameof(Dash));
                 }
             }
         } else if (GameManager.ataqAtivo) {
-            if (Input.GetButton("Fire1") && cooldownTimer > attackCooldown && CanAttack())
+            if (Input.GetButton("Fire1") && cooldownTimer >= attackCooldown && CanAttack())
                 Attack();
         }
 
@@ -90,7 +90,7 @@ public class Nave : MonoBehaviour {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        move = new Vector2(horizontalInput, verticalInput);
+        move = new Vector2(horizontalInput, verticalInput).normalized;
 
         if (!GameManager.JogoPausado) {
             anim.SetBool("Up", verticalInput > 0.01f);
@@ -154,10 +154,10 @@ public class Nave : MonoBehaviour {
     }
 
     public void TomaDano(int dano) {
-        VidaAtual = VidaAtual - dano;
+        VidaAtual -= dano;
 
         if (VidaAtual > 0) {
-            StartCoroutine("FicaInvulneravel");
+            StartCoroutine(nameof(FicaInvulneravel));
             anim.SetTrigger("hurt");
         } else {
             if (!dead) {
@@ -171,7 +171,7 @@ public class Nave : MonoBehaviour {
     public void AddVida(int _valor) {
         coletou.PlayOneShot(coletou.clip, 0.75f);
         if (VidaAtual <= 9)
-            VidaAtual = VidaAtual + _valor;
+            VidaAtual += _valor;
     }
 
     public void Morreu() {

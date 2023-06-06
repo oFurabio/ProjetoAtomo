@@ -21,11 +21,9 @@ public class GerenteCenas : MonoBehaviour {
     }
 
     public void Opcoes() {
-        config.SetActive(true);
-        menu.SetActive(false);
+        AtivaPainel(config);
 
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(opPrimeiro);
+        BotaoSelecionado(opPrimeiro);
     }
 
     public void Infinito() {
@@ -33,24 +31,34 @@ public class GerenteCenas : MonoBehaviour {
     }
 
     public void Creditos() {
-        creditos.SetActive(true);
-        menu.SetActive(false);
+        AtivaPainel(creditos);
 
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(credVoltar);
+        BotaoSelecionado(credVoltar);
     }
 
     public void Menu() {
-        menu.SetActive(true);
-        config.SetActive(false);
-        creditos.SetActive(false);
+        AtivaPainel(menu);
 
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(menJogar);
+        BotaoSelecionado(menJogar);
     }
 
     public void QuitGame() {
         Debug.Log("QUIT!");
         Application.Quit();
+    }
+
+    private void BotaoSelecionado(GameObject go)
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(go);
+    }
+
+    private void AtivaPainel(GameObject go)
+    {
+        menu.SetActive(false);
+        config.SetActive(false);
+        creditos.SetActive(false);
+
+        go.SetActive(true);
     }
 }
