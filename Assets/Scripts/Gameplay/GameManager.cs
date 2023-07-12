@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour {
     public void Resume() {
         pauseMenuUI.SetActive(false);
         configuracao.SetActive(false);
+        confirmacao.SetActive(false);
         buttonUI.SetActive(true);
         Time.timeScale = 1f;
         JogoPausado = false;
