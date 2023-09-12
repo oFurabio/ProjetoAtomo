@@ -528,7 +528,7 @@ MonoBehaviour:
   config: {fileID: 1594092774}
   creditos: {fileID: 568541473}
   opPrimeiro: {fileID: 34214806}
-  credVoltar: {fileID: 0}
+  credVoltar: {fileID: 325428328}
   menJogar: {fileID: 1241657909}
   levelName: Cena
 --- !u!1 &151148156

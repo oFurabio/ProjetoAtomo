@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Final : MonoBehaviour {
     public GameObject finalDash, finalTiro, ini1, ini2, ini3, quaseLa, hubble, terra, ovoPas;
