@@ -19,7 +19,7 @@ public class Final : MonoBehaviour {
         }
     }
     public void PrimeiroGrupo() {
-            ini1.SetActive(true);
+        ini1.SetActive(true);
     }
 
     public void SegundoGrupo() {
