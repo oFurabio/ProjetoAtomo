@@ -27,7 +27,6 @@ public class GerenteCenas : MonoBehaviour {
     }
 
     public void Infinito() {
-        //SceneManager.LoadScene("Infinito");
         Debug.LogWarning("Cena não incluída");
     }
 
