@@ -6,8 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class VideoController : MonoBehaviour {
 
-    public RawImage rawImage;
-    public VideoPlayer videoPlayer;
+    private string SCENE_TO_LOAD = "RefatorasScene";
+    [SerializeField] private RawImage rawImage;
+    [SerializeField] private VideoPlayer videoPlayer;
 
     void Awake() {
         videoPlayer.targetTexture = new RenderTexture(1920, 1080, 24);
@@ -24,7 +25,7 @@ public class VideoController : MonoBehaviour {
 
         yield return null;
 
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync("RefatorasScene");
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(SCENE_TO_LOAD);
 
         asyncOperation.allowSceneActivation = false;
 
