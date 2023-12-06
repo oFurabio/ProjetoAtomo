@@ -15,12 +15,13 @@ public class GameHandler : MonoBehaviour {
     private enum State {
         WaitingToStart,
         GamePlaying,
+        GamePaused,
         GameOver
     }
 
     [SerializeField] private float gamePlayingTimerMax = 10f;
 
-    private State state;
+    [SerializeField] private State state;
     private float waitingToStartTimer = 1f;
     private float gamePlayingTimer;
     private bool isGamePaused = false;
@@ -40,6 +41,22 @@ public class GameHandler : MonoBehaviour {
     }
 
     private void Update() {
+
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+        if(Input.GetKeyDown(KeyCode.LeftShift)) {
+            if (Input.GetKeyDown(KeyCode.F1))
+                Application.targetFrameRate = 10;
+            if (Input.GetKeyDown(KeyCode.F2))
+                Application.targetFrameRate = 20;
+            if (Input.GetKeyDown(KeyCode.F3))
+                Application.targetFrameRate = 30;
+            if (Input.GetKeyDown(KeyCode.F4))
+                Application.targetFrameRate = 60;
+            if (Input.GetKeyDown(KeyCode.F5))
+                Application.targetFrameRate = 900;
+        }
+#endif
+
         switch (state) {
             case State.WaitingToStart:
                 waitingToStartTimer -= Time.deltaTime;
@@ -68,6 +85,10 @@ public class GameHandler : MonoBehaviour {
         return state == State.GamePlaying;
     }
 
+    public bool IsGamePaused() {
+        return state == State.GamePaused;
+    }
+
     public bool IsGameOver() {
         return state == State.GameOver;
     }
@@ -80,11 +101,11 @@ public class GameHandler : MonoBehaviour {
         isGamePaused = !isGamePaused;
         if (isGamePaused) {
             Time.timeScale = 0f;
-
+            state = State.GamePaused;
             OnGamePaused?.Invoke(this, EventArgs.Empty);
         } else {
             Time.timeScale = 1f;
-
+            state = State.GamePlaying;
             OnGameResume?.Invoke(this, EventArgs.Empty);
         }
     }

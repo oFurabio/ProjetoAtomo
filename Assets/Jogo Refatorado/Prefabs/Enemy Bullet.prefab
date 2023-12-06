@@ -160,6 +160,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  COLLISION_TAG: Player
 --- !u!58 &7273947386907261806
 CircleCollider2D:
   m_ObjectHideFlags: 0
