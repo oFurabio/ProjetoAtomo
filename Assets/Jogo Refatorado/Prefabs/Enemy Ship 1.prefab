@@ -188,7 +188,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  COLLISION_TAG: Player
+  collisionTags:
+  - Player
+  - Player Bullet
 --- !u!58 &4331301710802876639
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -371,7 +373,7 @@ MonoBehaviour:
   up: 0
   down: 1
   movementSpeed: -2
-  screenLimit: -5.5
+  screenLimit: -8.5
 --- !u!114 &2338788348061795388
 MonoBehaviour:
   m_ObjectHideFlags: 0

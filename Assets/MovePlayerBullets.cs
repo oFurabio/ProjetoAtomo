@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveObject : MonoBehaviour {
+public class MovePlayerBullets : MonoBehaviour {
 
     [SerializeField] private bool up;
     [SerializeField] private bool down;
@@ -15,9 +15,9 @@ public class MoveObject : MonoBehaviour {
         transform.position += movement;
 
         if (up) {
-            if (transform.position.y >= screenLimit) { Destroy(gameObject); }
+            if (transform.position.y >= screenLimit) { gameObject.SetActive(false); }
         } else if (down) {
-            if (transform.position.y <= screenLimit) { Destroy(gameObject); }
+            if (transform.position.y <= screenLimit) { gameObject.SetActive(false); }
         }
     }
 

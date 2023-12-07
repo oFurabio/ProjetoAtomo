@@ -6,11 +6,14 @@ using UnityEngine.Events;
 public class DestroyOnContact : MonoBehaviour{
 
     public UnityEvent collisionDetected;
-    [SerializeField] private string COLLISION_TAG;
+    [SerializeField] private List<string> collisionTags = new();
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.CompareTag(COLLISION_TAG)) {
-            collisionDetected.Invoke();
+        foreach(string tag in collisionTags) {
+            if (collision.CompareTag(tag)) {
+                collisionDetected.Invoke();
+                break;
+            }
         }
     }
 }

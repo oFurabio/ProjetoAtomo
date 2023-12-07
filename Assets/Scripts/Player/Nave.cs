@@ -46,7 +46,7 @@ public class Nave : MonoBehaviour {
     [SerializeField] private float dashingTime = 0.2f;
     [SerializeField] private float dashCooldown = 2f;
     private bool canDash = true;
-    private bool isDashing;
+    //private bool isDashing;
 
     [SerializeField] private GameObject fogo;
     [SerializeField] private GameObject cooldown;
@@ -62,7 +62,6 @@ public class Nave : MonoBehaviour {
 
         dead = false;
         VidaAtual = vidaInicial;
-        isDashing = false;
 
         fogo.SetActive(true);
         cooldown.SetActive(true);
@@ -133,7 +132,6 @@ public class Nave : MonoBehaviour {
     private IEnumerator Dash() {
         dashSound.Play();
         canDash = false;
-        isDashing = true;
         if(horizontalInput != 0 && verticalInput != 0)
             body.MovePosition(body.position + (((speed * dashingPower)/2) * Time.deltaTime * move));
         else if (horizontalInput == 0 && verticalInput == 0) {
@@ -145,7 +143,6 @@ public class Nave : MonoBehaviour {
         yield return new WaitForSeconds(dashingTime);
         Physics2D.IgnoreLayerCollision(6, 7, false);
         tr.emitting = false;
-        isDashing = false;
         yield return new WaitForSecondsRealtime(dashCooldown);
     }
 
