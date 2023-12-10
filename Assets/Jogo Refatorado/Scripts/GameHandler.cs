@@ -34,6 +34,11 @@ public class GameHandler : MonoBehaviour {
 
     private void Start() {
         GameInput.Instance.OnPauseAction += GameInput_OnPauseAction;
+        PlayerHealth.Instance.OnPlayerDeath += PlayerHealth_OnPlayerDeath;
+    }
+    
+    private void PlayerHealth_OnPlayerDeath(object sender, EventArgs e) {
+        state = State.GameOver;
     }
 
     private void GameInput_OnPauseAction(object sender, EventArgs e) {

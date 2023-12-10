@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovePlayerBullets : MonoBehaviour {
+public class MovePlayerBullets : MonoBehaviour, IMoveObject {
 
     [SerializeField] private float initialMovementSpeed;
     [SerializeField] private float screenLimit;
@@ -13,13 +13,7 @@ public class MovePlayerBullets : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        Vector3 movement = movementSpeed * Time.deltaTime * Vector2.up;
-
-        transform.position += movement;
-
-        if (transform.position.y >= screenLimit) {
-            gameObject.SetActive(false);
-        }
+        MoveObject();
     }
 
     public void DisableMovement() {
@@ -28,5 +22,15 @@ public class MovePlayerBullets : MonoBehaviour {
 
     public void ReenableMovement() {
         movementSpeed = initialMovementSpeed;
+    }
+
+    public void MoveObject() {
+        Vector3 movement = movementSpeed * Time.deltaTime * Vector2.up;
+
+        transform.position += movement;
+
+        if (transform.position.y >= screenLimit) {
+            gameObject.SetActive(false);
+        }
     }
 }

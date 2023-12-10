@@ -93,14 +93,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7273947386907261807}
-  - component: {fileID: 8941183158113708070}
   - component: {fileID: 7273947386907261806}
   - component: {fileID: 8662283011707415452}
-  - component: {fileID: 7208455577670442947}
-  - component: {fileID: 3953937438562700079}
+  - component: {fileID: 6329394872140850324}
   m_Layer: 6
   m_Name: Enemy Bullet
-  m_TagString: Enemy Bullet
+  m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,47 +119,6 @@ Transform:
   - {fileID: 6597339240166453628}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8941183158113708070
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7273947386907261794}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd708bdf0520fdd479a0cd2b57b676bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collisionDetected:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3953937438562700079}
-        m_TargetAssemblyTypeName: EnemyBulletDeactivate, Assembly-CSharp
-        m_MethodName: DeactivationStarted
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7208455577670442947}
-        m_TargetAssemblyTypeName: MoveObject, Assembly-CSharp
-        m_MethodName: DisableMovement
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  collisionTags:
-  - Player
 --- !u!58 &7273947386907261806
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -218,7 +175,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7208455577670442947
+--- !u!114 &6329394872140850324
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -227,22 +184,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7273947386907261794}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf801e881a668fc48a27e675e4e31404, type: 3}
+  m_Script: {fileID: 11500000, guid: ee63ce08d458d5548bc2c00279e8e755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  up: 0
-  down: 1
-  movementSpeed: -5
+  initialMovementSpeed: 6
   screenLimit: -8.5
---- !u!114 &3953937438562700079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7273947386907261794}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32b1f7fe41e1fc64ba307bc310d18442, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  collisionTag: Player

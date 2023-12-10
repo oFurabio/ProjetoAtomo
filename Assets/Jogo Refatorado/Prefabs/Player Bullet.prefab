@@ -12,12 +12,10 @@ GameObject:
   - component: {fileID: 5267343809238887694}
   - component: {fileID: 3198246330701416307}
   - component: {fileID: 3162016046368162774}
-  - component: {fileID: 422603821220101920}
-  - component: {fileID: 6454364426533980231}
-  - component: {fileID: 2603970278318044202}
+  - component: {fileID: 2589609946509489021}
   m_Layer: 7
   m_Name: Player Bullet
-  m_TagString: Player Bullet
+  m_TagString: PlayerBullets
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,7 +119,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &422603821220101920
+--- !u!114 &2589609946509489021
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,62 +128,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1322338019749020536}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b537c0cc9f767b498723b690012ef77, type: 3}
+  m_Script: {fileID: 11500000, guid: b54d50d31798cba49ab0dcbc7d70e2f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collisionDetected:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2603970278318044202}
-        m_TargetAssemblyTypeName: DeactivationHandler, Assembly-CSharp
-        m_MethodName: DeactivationStarted
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 6454364426533980231}
-        m_TargetAssemblyTypeName: MovePlayerBullets, Assembly-CSharp
-        m_MethodName: DisableMovement
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &6454364426533980231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1322338019749020536}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ed694b7603155a4f9bb9cfdb467b916, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initialMovementSpeed: 9.5
+  initialMovementSpeed: 9
   screenLimit: 8.5
---- !u!114 &2603970278318044202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1322338019749020536}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32b1f7fe41e1fc64ba307bc310d18442, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  collisionTag: Enemy
 --- !u!1 &8478366555581449311
 GameObject:
   m_ObjectHideFlags: 0

@@ -164,7 +164,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.1
-    functionName: DestroyObject
+    functionName: DisableObject
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

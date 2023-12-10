@@ -2,24 +2,42 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Player;
 
 public class Player : MonoBehaviour {
 
 
     public static Player Instance { get; private set; }
 
-
-    /*[HideInInspector]*/ public Defense defense;
+    public Vector3 movementDirection { get; private set; }
+    public Defense defense { get; private set; }
+    public bool canMove { get; private set; }
     private bool isMoving;
 
 
-    [SerializeField] private GameInput gameInput;
+    private GameInput gameInput;
+    private PlayerHealth playerHealth;
 
-    [Header("")]
-    [SerializeField] private float moveSpeed = 7f;
 
-    public event EventHandler onShoot;
-    public event EventHandler onDash;
+    [Header("- Spaceship Speed -")]
+    [SerializeField] private float InitialMoveSpeed = 7f;
+    private float moveSpeed;
+    [Header("- Wall check -")]
+    [SerializeField] private float distance = 0.75f;
+    [SerializeField] private float radius = 0.5f;
+    [SerializeField] private LayerMask wallLayer;
+    [Header("- What to collide -")]
+    [SerializeField] private List<string> damageTags = new();
+    [SerializeField] private List<string> powerUpTags = new();
+
+
+    public event EventHandler OnShoot;
+    public event EventHandler OnDash;
+    public event EventHandler OnLoseHealth;
+    public event EventHandler OnGainHealth;
+    
+
+    private PlayerInputActions playerInputActions;
 
 
     public enum Defense {
@@ -33,28 +51,47 @@ public class Player : MonoBehaviour {
             Debug.LogError("There is more than one player instance");
 
         Instance = this;
+
+        gameInput = GameObject.FindGameObjectWithTag("GameInput").GetComponent<GameInput>();
+        playerHealth = GetComponent<PlayerHealth>();
+
+        playerInputActions = new PlayerInputActions();
+
+        playerInputActions.Player.Enable();
+
+        gameInput.OnChangeAction += GameInput_OnChangeAction;
+
+        playerHealth.OnPlayerDeath += PlayerHealth_OnPlayerDeath;
     }
 
     private void Start() {
-        gameInput.OnFireAction += GameInput_OnFireAction;
+        moveSpeed = InitialMoveSpeed;
+    }
+
+    private void PlayerHealth_OnPlayerDeath(object sender, EventArgs e) {
+        moveSpeed = 0f;
+    }
+
+    private void GameInput_OnChangeAction(object sender, EventArgs e) {
+        ChangeDefense();
     }
 
     private void Update() {
-        if (Action.Instance.isDashing)
+        if (PlayerAction.Instance.isDashing)
             return;
 
         HandleMovement();
-    }
 
-    private void GameInput_OnFireAction(object sender, System.EventArgs e) {
-        if (!GameHandler.Instance.IsGamePlaying()) return;
-
-        if (defense == Defense.Dash)
-            onDash?.Invoke(this, EventArgs.Empty);
-
-        if (defense == Defense.Shoot)
-            onShoot?.Invoke(this, EventArgs.Empty);
-
+        if (playerInputActions.Player.Action.IsInProgress()) {
+            if (!GameHandler.Instance.IsGamePlaying())
+                return;
+            else if (defense == Defense.Dash)
+                OnDash?.Invoke(this, EventArgs.Empty);
+            else if (defense == Defense.Shoot)
+                OnShoot?.Invoke(this, EventArgs.Empty);
+            else
+                Debug.LogError("OK, definitivamente não era pra isso ter ocorrido!");
+        }
     }
 
     public bool IsMoving() {
@@ -64,16 +101,48 @@ public class Player : MonoBehaviour {
     private void HandleMovement() {
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();
 
-        Vector3 moveDir = new(inputVector.x, inputVector.y);
+        movementDirection = new(inputVector.x, inputVector.y);
 
-        if(moveDir != Vector3.zero) {
-            isMoving = true;
-        } else if (moveDir == Vector3.zero) {
-            isMoving = false;
+        float movementDistance = moveSpeed * Time.deltaTime;
+        canMove = !Physics2D.CircleCast(transform.position, radius, movementDirection, distance, wallLayer);
+
+        if (!canMove) {
+            Vector3 movementDirectionX = new Vector3(movementDirection.x, 0, 0).normalized;
+            canMove = movementDirection.x != 0 && !Physics2D.Raycast(transform.position, movementDirectionX, distance, wallLayer);
+
+            if(canMove)
+                movementDirection = movementDirectionX;
+            else {
+                //  Não consegue se mover no eixo X
+
+                //  Tenta se mover só no eixo Y
+                Vector3 movementDirectionY = new Vector3(0, movementDirection.y, 0).normalized;
+                canMove = movementDirection.y != 0 && !Physics2D.Raycast(transform.position, movementDirectionY, distance, wallLayer);
+                if (canMove)
+                    movementDirection = movementDirectionY;
+                /*else {
+                    //  Não consegue se mover em nenhuma direção
+                }*/
+            }
         }
+        if (canMove)
+            transform.position += movementDirection * movementDistance;
 
-        float moveDistance = moveSpeed * Time.deltaTime;
+        isMoving = movementDirection != Vector3.zero;
+    }
 
-        transform.position += moveDir * moveDistance;
+    private void ChangeDefense() {
+        if (defense == Defense.Shoot)
+            defense = Defense.Dash;
+        else
+            defense = Defense.Shoot;
+    }
+
+    public void OnTriggerEnter2D(Collider2D collider) {
+        if (powerUpTags.Contains(collider.tag)) {
+            OnGainHealth?.Invoke(this, EventArgs.Empty);
+        } else if (damageTags.Contains(collider.tag)) {
+            OnLoseHealth?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

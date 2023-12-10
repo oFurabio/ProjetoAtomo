@@ -6,7 +6,7 @@ using static UnityEditor.PlayerSettings;
 
 public class SineFunction : MonoBehaviour {
 
-    [Header("")]
+    [Header("- Wave Pathing -")]
     [SerializeField] private float amplitude = 1f;
     [SerializeField] private float frequency = 1f;
     [SerializeField] private bool invert;

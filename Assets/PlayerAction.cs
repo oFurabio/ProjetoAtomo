@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Action : MonoBehaviour {
+public class PlayerAction : MonoBehaviour {
 
 
-    public static Action Instance;
+    public static PlayerAction Instance;
+    private PlayerInputActions playerInputActions;
 
 
     [SerializeField] private Transform firePoint;
@@ -35,13 +36,16 @@ public class Action : MonoBehaviour {
 
         Instance = this;
 
-        tr = GetComponent<TrailRenderer>();
+        playerInputActions = new PlayerInputActions();
+
         rb = GetComponent<Rigidbody2D>();
     }
 
     private void Start() {
-        Player.Instance.onShoot += Player_onShoot;
-        Player.Instance.onDash += Player_onDash;
+        Player.Instance.OnShoot += Player_onShoot;
+        Player.Instance.OnDash += Player_onDash;
+
+        tr = GetComponentInChildren<TrailRenderer>();
 
         isDashing = false;
         timer = 0f;
@@ -67,7 +71,7 @@ public class Action : MonoBehaviour {
     }
 
     private void Player_onDash(object sender, System.EventArgs e) {
-        if (timer >= dashCooldown && Player.Instance.IsMoving()) {
+        if (timer >= dashCooldown && Player.Instance.IsMoving() && Player.Instance.canMove) {
             timer = 0f;
             Dash();
         }
@@ -81,7 +85,6 @@ public class Action : MonoBehaviour {
     }
 
     public void Shoot() {
-
         foreach (GameObject bullet in bullets) {
             if (!bullet.activeInHierarchy) {
                 bullet.transform.position = firePoint.position;
@@ -97,12 +100,13 @@ public class Action : MonoBehaviour {
 
     private IEnumerator Dashing() {
         isDashing = true;
-        rb.velocity = new Vector2(GameInput.Instance.GetMovementVectorNormalized().x * dashPower, GameInput.Instance.GetMovementVectorNormalized().y * dashPower);
+        rb.velocity = new Vector2(Player.Instance.movementDirection.x * dashPower, Player.Instance.movementDirection.y * dashPower);
         tr.emitting = true;
+        Physics2D.IgnoreLayerCollision(7, 6, true);
         yield return new WaitForSeconds(dashDuration);
         tr.emitting = false;
         isDashing = false;
         rb.velocity = Vector2.zero;
+        Physics2D.IgnoreLayerCollision(7, 6, false);
     }
-
 }

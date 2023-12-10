@@ -6,8 +6,11 @@ TagManager:
   tags:
   - Enemy
   - Coletavel
-  - Player Bullet
-  - Enemy Bullet
+  - Bullet
+  - GameInput
+  - EnemyBullet
+  - PlayerBullets
+  - PowerUps
   layers:
   - Default
   - TransparentFX
@@ -17,7 +20,7 @@ TagManager:
   - UI
   - Enemy
   - Player
-  - Chao
+  - Limits
   - 
   - 
   - 

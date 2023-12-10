@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class GameRunningUI : MonoBehaviour {
 
     [SerializeField] private Button pauseButton;
+    [SerializeField] private Image healthBar;
+
+    [SerializeField] private List<Sprite> healthBarSprites;
 
     private void Awake() {
         pauseButton.onClick.AddListener(() => {
@@ -16,8 +19,13 @@ public class GameRunningUI : MonoBehaviour {
     private void Start() {
         GameHandler.Instance.OnGamePaused += GameHandler_OnGamePaused;
         GameHandler.Instance.OnGameResume += GameHandler_OnGameResume;
+        PlayerHealth.Instance.OnHealthChanged += PlayerHealth_OnHealthChanged;
 
         Show();
+    }
+
+    private void PlayerHealth_OnHealthChanged(object sender, System.EventArgs e) {
+        ChangeHealth();
     }
 
     private void GameHandler_OnGameResume(object sender, System.EventArgs e) {
@@ -34,5 +42,9 @@ public class GameRunningUI : MonoBehaviour {
 
     private void Hide() {
         pauseButton.gameObject.SetActive(false);
+    }
+
+    public void ChangeHealth() {
+        healthBar.sprite = healthBarSprites[PlayerHealth.Instance.currentHealth];
     }
 }

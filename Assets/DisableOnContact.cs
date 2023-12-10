@@ -3,13 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class DisableOnContact : MonoBehaviour {
+public class DisableOnContact : MonoBehaviour, IDeactivationHandler {
 
     public UnityEvent collisionDetected;
+    [SerializeField] private List<string> collisionTags = new();
 
-    private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.CompareTag("Enemy")) {
-            collisionDetected.Invoke();
+    public void DeactivationStarted() {
+
+    }
+
+    public void DestroyObject() {
+        
+    }
+
+    public void DisableObject() {
+        
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision) {
+        foreach (string tag in collisionTags) {
+            if (collision.CompareTag(tag)) {
+                collisionDetected.Invoke();
+                break;
+            }
         }
     }
 }
