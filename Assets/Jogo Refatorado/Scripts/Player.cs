@@ -9,12 +9,14 @@ public class Player : MonoBehaviour {
     public static Player Instance { get; private set; }
 
 
-    public Defense defense;
+    /*[HideInInspector]*/ public Defense defense;
     private bool isMoving;
 
 
-    [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private GameInput gameInput;
+
+    [Header("")]
+    [SerializeField] private float moveSpeed = 7f;
 
     public event EventHandler onShoot;
     public event EventHandler onDash;
@@ -38,6 +40,9 @@ public class Player : MonoBehaviour {
     }
 
     private void Update() {
+        if (Action.Instance.isDashing)
+            return;
+
         HandleMovement();
     }
 
@@ -60,6 +65,12 @@ public class Player : MonoBehaviour {
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();
 
         Vector3 moveDir = new(inputVector.x, inputVector.y);
+
+        if(moveDir != Vector3.zero) {
+            isMoving = true;
+        } else if (moveDir == Vector3.zero) {
+            isMoving = false;
+        }
 
         float moveDistance = moveSpeed * Time.deltaTime;
 

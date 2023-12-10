@@ -4,25 +4,19 @@ using UnityEngine;
 
 public class MoveObject : MonoBehaviour {
 
-    [SerializeField] private bool up;
-    [SerializeField] private bool down;
+    [Header("")]
     [SerializeField] private float movementSpeed;
     [SerializeField] private float screenLimit;
+
 
     private void FixedUpdate() {
         Vector3 movement = movementSpeed * Time.deltaTime * Vector2.up;
 
         transform.position += movement;
 
-        if (up) {
-            if (transform.position.y >= screenLimit) { Destroy(gameObject); }
-        } else if (down) {
-            if (transform.position.y <= screenLimit) { Destroy(gameObject); }
-        }
+        if (transform.position.y <= screenLimit) { Destroy(gameObject); }
     }
 
-    public void DisableMovement() {
-        movementSpeed = 0f;
-    }
+    public void DisableMovement() { movementSpeed = 0f; }
 
 }

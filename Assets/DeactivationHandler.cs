@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDeactivationHandler : MonoBehaviour {
+public class DeactivationHandler : MonoBehaviour {
     
     private Animator animator;
     private CircleCollider2D colliderComponent;
@@ -17,8 +17,13 @@ public class EnemyDeactivationHandler : MonoBehaviour {
         animator.SetTrigger("Explode");
     }
 
-    public void DeactivationFinished() {
+    public void DestroyObject() {
         Destroy(gameObject);
+    }
+
+    public void DisableObject() {
+        gameObject.SetActive(false);
+        colliderComponent.enabled = true;
     }
 
 }

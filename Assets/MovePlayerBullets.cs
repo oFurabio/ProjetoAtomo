@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class MovePlayerBullets : MonoBehaviour {
 
-    [SerializeField] private bool up;
-    [SerializeField] private bool down;
-    [SerializeField] private float movementSpeed;
+    [SerializeField] private float initialMovementSpeed;
     [SerializeField] private float screenLimit;
+    private float movementSpeed;
+
+    private void Start() {
+        movementSpeed = initialMovementSpeed;
+    }
 
     private void FixedUpdate() {
         Vector3 movement = movementSpeed * Time.deltaTime * Vector2.up;
 
         transform.position += movement;
 
-        if (up) {
-            if (transform.position.y >= screenLimit) { gameObject.SetActive(false); }
-        } else if (down) {
-            if (transform.position.y <= screenLimit) { gameObject.SetActive(false); }
+        if (transform.position.y >= screenLimit) {
+            gameObject.SetActive(false);
         }
     }
 
@@ -25,4 +26,7 @@ public class MovePlayerBullets : MonoBehaviour {
         movementSpeed = 0f;
     }
 
+    public void ReenableMovement() {
+        movementSpeed = initialMovementSpeed;
+    }
 }
