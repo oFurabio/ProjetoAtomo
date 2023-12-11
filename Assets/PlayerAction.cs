@@ -24,7 +24,8 @@ public class PlayerAction : MonoBehaviour {
 
 
     private Rigidbody2D rb;
-    private TrailRenderer tr;
+    private AudioSource audioSource;
+    private TrailRenderer trailRenderer;
 
 
     private List<GameObject> bullets = new();
@@ -39,15 +40,17 @@ public class PlayerAction : MonoBehaviour {
         playerInputActions = new PlayerInputActions();
 
         rb = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start() {
         Player.Instance.OnShoot += Player_onShoot;
         Player.Instance.OnDash += Player_onDash;
 
-        tr = GetComponentInChildren<TrailRenderer>();
+        trailRenderer = GetComponentInChildren<TrailRenderer>();
 
         isDashing = false;
+        Physics2D.IgnoreLayerCollision(7, 6, false);
         timer = 0f;
 
         for (int i = 0; i < bulletsArray.transform.childCount; i++) {
@@ -88,6 +91,7 @@ public class PlayerAction : MonoBehaviour {
         foreach (GameObject bullet in bullets) {
             if (!bullet.activeInHierarchy) {
                 bullet.transform.position = firePoint.position;
+                audioSource.PlayOneShot(audioSource.clip);
                 bullet.SetActive(true);
                 break;
             }
@@ -101,10 +105,10 @@ public class PlayerAction : MonoBehaviour {
     private IEnumerator Dashing() {
         isDashing = true;
         rb.velocity = new Vector2(Player.Instance.movementDirection.x * dashPower, Player.Instance.movementDirection.y * dashPower);
-        tr.emitting = true;
+        trailRenderer.emitting = true;
         Physics2D.IgnoreLayerCollision(7, 6, true);
         yield return new WaitForSeconds(dashDuration);
-        tr.emitting = false;
+        trailRenderer.emitting = false;
         isDashing = false;
         rb.velocity = Vector2.zero;
         Physics2D.IgnoreLayerCollision(7, 6, false);

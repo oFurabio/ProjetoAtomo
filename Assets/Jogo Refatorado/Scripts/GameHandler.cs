@@ -5,7 +5,7 @@ using UnityEngine;
 using static UnityEngine.CullingGroup;
 
 public class GameHandler : MonoBehaviour {
-    
+
     public static GameHandler Instance { get; private set; }
 
     public event EventHandler OnStateChanged;
@@ -36,9 +36,10 @@ public class GameHandler : MonoBehaviour {
         GameInput.Instance.OnPauseAction += GameInput_OnPauseAction;
         PlayerHealth.Instance.OnPlayerDeath += PlayerHealth_OnPlayerDeath;
     }
-    
+
     private void PlayerHealth_OnPlayerDeath(object sender, EventArgs e) {
         state = State.GameOver;
+        OnStateChanged?.Invoke(this, EventArgs.Empty);
     }
 
     private void GameInput_OnPauseAction(object sender, EventArgs e) {
@@ -48,7 +49,7 @@ public class GameHandler : MonoBehaviour {
     private void Update() {
 
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
-        if(Input.GetKeyDown(KeyCode.LeftShift)) {
+        if (Input.GetKey(KeyCode.LeftShift)) {
             if (Input.GetKeyDown(KeyCode.F1))
                 Application.targetFrameRate = 10;
             if (Input.GetKeyDown(KeyCode.F2))
@@ -64,6 +65,7 @@ public class GameHandler : MonoBehaviour {
 
         switch (state) {
             case State.WaitingToStart:
+                Time.timeScale = 1f;
                 waitingToStartTimer -= Time.deltaTime;
                 if (waitingToStartTimer < 0f) {
                     state = State.GamePlaying;
@@ -81,6 +83,7 @@ public class GameHandler : MonoBehaviour {
                 break;
 
             case State.GameOver:
+                Time.timeScale = 0.5f;
                 break;
         }
     }
@@ -103,15 +106,17 @@ public class GameHandler : MonoBehaviour {
     }
 
     public void TogglePauseGame() {
-        isGamePaused = !isGamePaused;
-        if (isGamePaused) {
-            Time.timeScale = 0f;
-            state = State.GamePaused;
-            OnGamePaused?.Invoke(this, EventArgs.Empty);
-        } else {
-            Time.timeScale = 1f;
-            state = State.GamePlaying;
-            OnGameResume?.Invoke(this, EventArgs.Empty);
+        if (IsGamePlaying() || IsGamePaused()) {
+            isGamePaused = !isGamePaused;
+            if (isGamePaused) {
+                Time.timeScale = 0f;
+                state = State.GamePaused;
+                OnGamePaused?.Invoke(this, EventArgs.Empty);
+            } else {
+                Time.timeScale = 1f;
+                state = State.GamePlaying;
+                OnGameResume?.Invoke(this, EventArgs.Empty);
+            }
         }
     }
 }

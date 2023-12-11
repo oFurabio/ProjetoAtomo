@@ -77,9 +77,8 @@ public class Player : MonoBehaviour {
     }
 
     private void Update() {
-        if (PlayerAction.Instance.isDashing)
-            return;
-
+        if (PlayerAction.Instance.isDashing) return;
+        if (GameHandler.Instance.IsGameOver()) return;
         HandleMovement();
 
         if (playerInputActions.Player.Action.IsInProgress()) {

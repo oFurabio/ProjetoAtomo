@@ -18,6 +18,7 @@ public class EnemySpaceship : MonoBehaviour, IMoveObject, IDeactivationHandler {
 
     public event EventHandler OnHit;
     private Animator animator;
+    private AudioSource audioSource;
     private CircleCollider2D spaceshipCollider;
     
 
@@ -25,6 +26,7 @@ public class EnemySpaceship : MonoBehaviour, IMoveObject, IDeactivationHandler {
     private void Awake() {
         animator = GetComponent<Animator>();
         spaceshipCollider = GetComponent<CircleCollider2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start() {
@@ -58,6 +60,7 @@ public class EnemySpaceship : MonoBehaviour, IMoveObject, IDeactivationHandler {
     public void DeactivationStarted() {
         spaceshipCollider.enabled = false;
         animator.SetTrigger("Explode");
+        audioSource.PlayOneShot(audioSource.clip);
     }
 
     public void DisableObject() { Destroy(gameObject); }

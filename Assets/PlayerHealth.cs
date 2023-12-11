@@ -10,7 +10,7 @@ public class PlayerHealth : MonoBehaviour {
 
     private PolygonCollider2D playerCollider;
     private bool invulnerable;
-
+    [SerializeField] private float invincibilityTime;
     [SerializeField] private int maxHealth;
     public int currentHealth { get; private set; }
 
@@ -30,7 +30,7 @@ public class PlayerHealth : MonoBehaviour {
 
     private void Start() {
         currentHealth = maxHealth;
-
+        Physics2D.IgnoreLayerCollision(7, 6, false);
         playerCollider = GetComponent<PolygonCollider2D>();
     }
 
@@ -46,8 +46,15 @@ public class PlayerHealth : MonoBehaviour {
             OnPlayerDeath?.Invoke(this, EventArgs.Empty);
         } else if (currentHealth > 1) {
             currentHealth--;
+            StartCoroutine(BecomeInvincible());
         }
         OnHealthChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    private IEnumerator BecomeInvincible() {
+        Physics2D.IgnoreLayerCollision(7, 6, true);
+        yield return new WaitForSeconds(invincibilityTime);
+        Physics2D.IgnoreLayerCollision(7, 6, false);
     }
 
 }
