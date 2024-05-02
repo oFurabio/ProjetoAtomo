@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
 
     public static Player Instance { get; private set; }
 
+
     public Vector3 movementDirection { get; private set; }
     public Defense defense { get; private set; }
     public bool canMove { get; private set; }
@@ -16,7 +17,6 @@ public class Player : MonoBehaviour {
 
 
     private GameInput gameInput;
-    private PlayerHealth playerHealth;
 
 
     [Header("- Spaceship Speed -")]
@@ -26,15 +26,10 @@ public class Player : MonoBehaviour {
     [SerializeField] private float distance = 0.75f;
     [SerializeField] private float radius = 0.5f;
     [SerializeField] private LayerMask wallLayer;
-    [Header("- What to collide -")]
-    [SerializeField] private List<string> damageTags = new();
-    [SerializeField] private List<string> powerUpTags = new();
 
 
     public event EventHandler OnShoot;
     public event EventHandler OnDash;
-    public event EventHandler OnLoseHealth;
-    public event EventHandler OnGainHealth;
     
 
     private PlayerInputActions playerInputActions;
@@ -53,23 +48,16 @@ public class Player : MonoBehaviour {
         Instance = this;
 
         gameInput = GameObject.FindGameObjectWithTag("GameInput").GetComponent<GameInput>();
-        playerHealth = GetComponent<PlayerHealth>();
 
         playerInputActions = new PlayerInputActions();
 
         playerInputActions.Player.Enable();
 
         gameInput.OnChangeAction += GameInput_OnChangeAction;
-
-        playerHealth.OnPlayerDeath += PlayerHealth_OnPlayerDeath;
     }
 
     private void Start() {
         moveSpeed = InitialMoveSpeed;
-    }
-
-    private void PlayerHealth_OnPlayerDeath(object sender, EventArgs e) {
-        moveSpeed = 0f;
     }
 
     private void GameInput_OnChangeAction(object sender, EventArgs e) {
@@ -79,6 +67,7 @@ public class Player : MonoBehaviour {
     private void Update() {
         if (PlayerAction.Instance.isDashing) return;
         if (GameHandler.Instance.IsGameOver()) return;
+
         HandleMovement();
 
         if (playerInputActions.Player.Action.IsInProgress()) {
@@ -135,13 +124,5 @@ public class Player : MonoBehaviour {
             defense = Defense.Dash;
         else
             defense = Defense.Shoot;
-    }
-
-    public void OnTriggerEnter2D(Collider2D collider) {
-        if (powerUpTags.Contains(collider.tag)) {
-            OnGainHealth?.Invoke(this, EventArgs.Empty);
-        } else if (damageTags.Contains(collider.tag)) {
-            OnLoseHealth?.Invoke(this, EventArgs.Empty);
-        }
     }
 }

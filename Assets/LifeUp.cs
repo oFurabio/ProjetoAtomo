@@ -20,7 +20,6 @@ public class LifeUp : MonoBehaviour, IMoveObject, IDeactivationHandler {
 
     private void Start() {
         ReenableMovement();
-        Player.Instance.OnGainHealth += Player_OnGainHealth;
     }
 
     private void Player_OnGainHealth(object sender, System.EventArgs e) {

@@ -5,8 +5,7 @@ using UnityEngine;
 public class PlayerAction : MonoBehaviour {
 
 
-    public static PlayerAction Instance;
-    private PlayerInputActions playerInputActions;
+    public static PlayerAction Instance { get; private set; }
 
 
     [SerializeField] private Transform firePoint;
@@ -24,7 +23,6 @@ public class PlayerAction : MonoBehaviour {
 
 
     private Rigidbody2D rb;
-    private AudioSource audioSource;
     private TrailRenderer trailRenderer;
 
 
@@ -37,10 +35,7 @@ public class PlayerAction : MonoBehaviour {
 
         Instance = this;
 
-        playerInputActions = new PlayerInputActions();
-
         rb = GetComponent<Rigidbody2D>();
-        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start() {
@@ -91,7 +86,6 @@ public class PlayerAction : MonoBehaviour {
         foreach (GameObject bullet in bullets) {
             if (!bullet.activeInHierarchy) {
                 bullet.transform.position = firePoint.position;
-                audioSource.PlayOneShot(audioSource.clip);
                 bullet.SetActive(true);
                 break;
             }
