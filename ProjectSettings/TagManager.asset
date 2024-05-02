@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Bullet
   - Coletavel
+  - Video
   layers:
   - Default
   - TransparentFX
